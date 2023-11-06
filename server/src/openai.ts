@@ -1,11 +1,11 @@
 const OpenAI = require("openai");
 
 // OPEN AI
-const apiKey = "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";
+const apiKey = process.env.APIKEY
 const openai = new OpenAI({apiKey: apiKey});
 
 const RunPrompt = async (PdfText:String, question:String) => {
- 
+
   const prompt = `answer any question related to ${PdfText}. Return response in the following parable JSON format:
   
     {
@@ -18,6 +18,7 @@ const RunPrompt = async (PdfText:String, question:String) => {
     {role: "user", content: prompt},
     {role: "user", content: question},
   ]
+  console.log("PARSE AI")
 
   const res = await openai.chat.completions.create({
      messages: messages,

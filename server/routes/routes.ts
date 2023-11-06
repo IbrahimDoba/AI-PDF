@@ -28,10 +28,10 @@ interface MulterRequest extends Request {
   file: any;
 }
 
-const filePath = path.join(__dirname, "cat text.docx");
+// const filePath = path.join(__dirname, "cat text.docx");
 
-const pdfFile = fs.readFileSync(filePath);
-const fileDocPath = path.join(__dirname, "cat text.docx");
+// const pdfFile = fs.readFileSync(filePath);
+// const fileDocPath = path.join(__dirname, "cat text.docx");
 
 // ROUTES
 router.get("/", (req: Request, res: Response) => {
@@ -42,34 +42,21 @@ router.post("/ai", (req: Request, res: Response) => {
   res.send("Welcome to Express & TypeScript Server");
 });
 
-router.get("/test", (req: Request, res: Response) => {
-  officeParser.parseOffice(fileDocPath, function (data: any, err: any) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    console.log(data);
-  });
-  // pdfparse(pdfFile)
-  //   .then(function (data: any) {
-  //     console.log(data.text);
-  //   })
-  //   .catch(function (error: any) {
-  //     console.error("Error parsing PDF:", error);
-  //     // Handle the error and send an error response back to the client
-  //     res.status(500).send("Internal Server Error");
-  //   });
-});
+
 router.post(
   "/upload",
   upload.single("file"),
   async (req: Request, res: Response) => {
     const title = req.body.title;
     const fileName = (req as MulterRequest).file.filename;
+    if(fileName === undefined){
+      res.send("no file")
+    }
     pdfFileName = fileName;
     console.log("TEST DATA", title, fileName);
 
-    const uploadedDocPath = path.join(__dirname, fileName);
+    const uploadedDocPath = path.join("./files", fileName);
+    console.log("filepath",uploadedDocPath)
 
     // console.log(fileName)
     try {
@@ -77,10 +64,12 @@ router.post(
         uploadedDocPath,
         async function (data: any, err: any) {
           if (err) {
-            console.log(err);
+            res.send("err")
+           console.log(err)
             return;
           }
           console.log(data);
+          res.send("sucess")
           globalPdfText = data;
 
           // console.log(paresedRes);
@@ -105,11 +94,11 @@ router.post("/question", async (req: Request, res: Response) => {
     }
 
     console.log(question);
-    // const parsedRes = await RunPrompt(globalPdfText, question);
+    const parsedRes = await RunPrompt(globalPdfText, question);
 
-    // const newPdf = new Pdf({ aiAnswer: parsedRes, fileName: pdfFileName });
-    // console.log(newPdf);
-    // await newPdf.save();
+    const newPdf = new Pdf({ aiAnswer: parsedRes, fileName: pdfFileName });
+    console.log(newPdf);
+    await newPdf.save();
     res.json("parsedRes");
   } catch (err) {}
 });
@@ -121,5 +110,14 @@ router.get("/getChats", async (req: Request, res: Response) => {
   console.log("AI CHATS HERE",aiChats)
   res.json(aiChats)
 });
+
+router.delete("/deleteChat/:name", async (req:Request, res:Response) => {
+  const chatsToDelete = req.params.name;
+  const deletePdf = await Pdf.deleteMany({fileName:chatsToDelete})
+  res.status(200).json({ message: "deleted" });
+  console.log(deletePdf)
+})
+
+
 
 module.exports = router;
