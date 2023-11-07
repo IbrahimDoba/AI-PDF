@@ -1,10 +1,8 @@
 import { Router, Request, Response, response } from "express";
-// import mongoose from "mongoose";
 import Pdf from "../schema/pdfDetails";
 const router = Router();
 const multer = require("multer");
 const path = require("path");
-// const pdfparse = require("pdf-parse");
 const officeParser = require("officeparser");
 const { RunPrompt } = require("../src/openai");
 

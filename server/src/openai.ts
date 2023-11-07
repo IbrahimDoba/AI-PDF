@@ -18,18 +18,18 @@ const RunPrompt = async (PdfText:String, question:String) => {
     {role: "user", content: prompt},
     {role: "user", content: question},
   ]
-  console.log("PARSE AI")
 
   const res = await openai.chat.completions.create({
      messages: messages,
     temperature: 1,
     model: "gpt-3.5-turbo",
   });
+  console.log("PARSE AI1")
 
 
   const parsableJSONres = res.choices[0].message.content
   const parsedRes = JSON.parse(parsableJSONres)
-  console.log("PARSE AI",parsedRes)
+  console.log("PARSE AI2",parsedRes)
 
   // console.log("AI ANASWER",parsedRes)
   return parsedRes
