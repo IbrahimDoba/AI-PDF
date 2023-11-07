@@ -2,7 +2,7 @@
   "name": "typescript-tutorial-node",
   "version": "1.0.0",
   "main": "index.js",
-  "module": "commonjs",
+  "module": "module",
   "license": "MIT",
   "scripts": {
     "start": "nodemon ./src/index.ts",
