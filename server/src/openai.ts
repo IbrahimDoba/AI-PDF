@@ -20,7 +20,7 @@ const RunPrompt = async (PdfText:String, question:String) => {
   ]
 
   const res = await openai.chat.completions.create({
-     messages: messages,
+    messages: messages,
     temperature: 1,
     model: "gpt-3.5-turbo",
   });
