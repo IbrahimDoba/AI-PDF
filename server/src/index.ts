@@ -1,6 +1,6 @@
-import express, { Application } from "express";
-import 'dotenv/config';
-import mongoose from "mongoose";
+const express = require("express");
+require('dotenv').config()
+const mongoose = require("mongoose");
 const MyRoutes = require("../routes/routes.ts");
 const cors = require("cors")
 //For env File
@@ -10,7 +10,7 @@ const URI =
 
 mongoose.connect(URI, {}).then(() => console.log("Mongo Connceted"));
 
-const app: Application = express();
+const app: any = express();
 app.use(express.json())
 app.use(cors())
 app.use('./files', express.static("files"))

@@ -37,3 +37,5 @@ const RunPrompt = async (PdfText:String, question:String) => {
 
 
 module.exports = { RunPrompt }
+
+export {}

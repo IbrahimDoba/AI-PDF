@@ -1,4 +1,5 @@
-import mongoose, { Model, Schema } from "mongoose";
+// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 interface IPdf extends Document {
   title: string;
@@ -11,7 +12,7 @@ type aiRes = {
   A: String;
 };
 
-const pdfDetailsSchema = new Schema<IPdf>(
+const pdfDetailsSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -29,6 +30,10 @@ const pdfDetailsSchema = new Schema<IPdf>(
 
   { timestamps: true }
 );
-const Pdf: Model<IPdf> = mongoose.model("PdfDetails", pdfDetailsSchema);
+module.exports = mongoose.model("PdfDetails", pdfDetailsSchema);
 
-export default Pdf;
+export {}
+ // const Pdf: Model<IPdf> = mongoose.model("PdfDetails", pdfDetailsSchema);
+// new Schema<IPDF>
+// export default Pdf;
+// import mongoose, { Model, Schema } from "mongoose";
