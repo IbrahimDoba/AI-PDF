@@ -10,7 +10,7 @@ const URI =
 
 mongoose.connect(URI, {}).then(() => console.log("Mongo Connceted"));
 
-const app: any = express();
+const app = express();
 app.use(express.json())
 app.use(cors())
 app.use('./files', express.static("files"))
