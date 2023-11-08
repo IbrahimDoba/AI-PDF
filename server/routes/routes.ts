@@ -1,7 +1,7 @@
-const router = require("express").Router();
+import { Router, Request, Response, response } from "express";
 const  Pdf = require("../schema/pdfDetails");
 
-// const router = Router();
+const router = Router();
 const multer = require("multer");
 const path = require("path");
 const officeParser = require("officeparser");
@@ -32,11 +32,11 @@ interface MulterRequest extends Request {
 // const fileDocPath = path.join(__dirname, "cat text.docx");
 
 // ROUTES
-router.get("/", (req:any ,res:any) => {
+router.get("/", (req: Request, res: Response) => {
   res.send("AI RUNNING");
 });
 
-router.post("/ai", (req:any ,res:any) => {
+router.post("/ai", (req: Request, res: Response) => {
   res.send("Welcome to Express & TypeScript Server");
 });
 
@@ -44,7 +44,7 @@ router.post("/ai", (req:any ,res:any) => {
 router.post(
   "/upload",
   upload.single("file"),
-  async (req:any ,res:any) => {
+  async (req: Request, res: Response) => {
     const title = req.body.title;
     const fileName = (req as MulterRequest).file.filename;
     if(fileName === undefined){
@@ -81,7 +81,7 @@ router.post(
     }
   }
 );
-router.post("/question", async (req:any ,res:any) => {
+router.post("/question", async (req: Request, res: Response) => {
   const question = req.body.question;
   try {
     if (!question) {
@@ -102,14 +102,14 @@ router.post("/question", async (req:any ,res:any) => {
 });
 // get the info
 
-router.get("/getChats", async (req:any ,res:any) => {
+router.get("/getChats", async (req: Request, res: Response) => {
   const fileName = pdfFileName;
   const aiChats = await Pdf.find({ fileName: fileName });
   console.log("AI CHATS HERE",aiChats)
   res.json(aiChats)
 });
 
-router.delete("/deleteChat/:name", async (req:any ,res:any) => {
+router.delete("/deleteChat/:name", async (req:Request, res:Response) => {
   const chatsToDelete = req.params.name;
   const deletePdf = await Pdf.deleteMany({fileName:chatsToDelete})
   res.status(200).json({ message: "deleted" });
