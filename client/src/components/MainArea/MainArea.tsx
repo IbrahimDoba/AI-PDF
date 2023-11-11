@@ -48,7 +48,7 @@ export default function MainArea() {
     formData.append("file", file);
     console.log(title, file);
 
-    const res = await axios.post("http://localhost:5001/upload", formData, {
+    const res = await axios.post("https://ai-pdf-mm52.onrender.com/upload", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
 
@@ -70,7 +70,7 @@ export default function MainArea() {
       setModalMessage("Please Upload a file before you can Preview it");
       return;
     }
-    window.open(`http://localhost:5001/files/${file}`, "_blank", "noreferrer");
+    window.open(`https://ai-pdf-mm52.onrender.com/files/${file}`, "_blank", "noreferrer");
   };
   const submitQuestion = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -89,7 +89,7 @@ export default function MainArea() {
 
     console.log(aiQestion);
 
-    const res = await axios.post("http://localhost:5001/question", {
+    const res = await axios.post("https://ai-pdf-mm52.onrender.com/question", {
       question: aiQestion,
     });
 
@@ -105,7 +105,7 @@ export default function MainArea() {
 
   const getAiChats = async () => {
     SetIsLoadingText(true);
-    const res = await axios.get("http://localhost:5001/getChats");
+    const res = await axios.get("https://ai-pdf-mm52.onrender.com/getChats");
     console.log(res);
     if(res.data.length > 1) {
       setTextIsPres(true);
@@ -122,7 +122,7 @@ export default function MainArea() {
     console.log("delet id heree", deleteId);
 
     const res = await axios.delete(
-      `http://localhost:5001/deleteChat/${deleteId}`,
+      `https://ai-pdf-mm52.onrender.com/deleteChat/${deleteId}`,
       {
         params: { name: deleteId },
       }

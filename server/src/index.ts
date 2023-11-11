@@ -12,8 +12,7 @@ mongoose.connect(URI, {}).then(() => console.log("Mongo Connceted"));
 
 const app = express();
 app.use(express.json())
-app.use(cors())
-app.use('./files', express.static("files"))
+app.use(cors({ origin : "https://ai-pdf-eight.vercel.app" }))
 
 app.use("/", MyRoutes);
 
