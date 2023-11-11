@@ -5,10 +5,8 @@
   "module": "commonjs",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon ./src/index.ts",
-    "build": "npm i",
-    "tsc": "tsc",
-    "start:prod": "node build/src/index.js",
+    "start": "node ./dist/src/index.js",
+    "build": "tsc",
     "dev": "nodemon ./src/index.ts"
   },
   "dependencies": {
