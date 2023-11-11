@@ -1,7 +1,7 @@
 const express = require("express");
 require('dotenv').config()
 const mongoose = require("mongoose");
-const MyRoutes = require("../routes/routes.ts");
+const MyRoutes = require("../routes/routes");
 const cors = require("cors")
 //For env File
 
