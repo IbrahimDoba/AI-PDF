@@ -48,9 +48,17 @@ export default function MainArea() {
     formData.append("file", file);
     console.log(title, file);
 
-    const res = await axios.post("https://ai-pdf-mm52.onrender.com/upload", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    const res = await axios.post(
+      "https://ai-pdf-mm52.onrender.com/upload",
+      { file: file, title: title },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Accept: "multipart/form-data",
+          "Access-Control-Allow-Origin": "https://ai-pdf-eight.vercel.app",
+        },
+      }
+    );
 
     if (res.data === "err") {
       setShowModel(true);
@@ -70,7 +78,7 @@ export default function MainArea() {
       setModalMessage("Please Upload a file before you can Preview it");
       return;
     }
-    window.open(`https://ai-pdf-mm52.onrender.com/files/${file}`, "_blank", "noreferrer");
+    window.open(`http://localhost:5001/files/${file}`, "_blank", "noreferrer");
   };
   const submitQuestion = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -100,19 +108,16 @@ export default function MainArea() {
     SetIsLoadingText(false);
     setDeleteId(res.data[0].fileName);
     setTextIsPres(true);
-
   };
 
   const getAiChats = async () => {
     SetIsLoadingText(true);
     const res = await axios.get("https://ai-pdf-mm52.onrender.com/getChats");
     console.log(res);
-    if(res.data.length > 1) {
+    if (res.data.length > 1) {
       setTextIsPres(true);
-
-      } else {
-        
-      }
+    } else {
+    }
     // setUserText(res.data.aiAnswer.Q);
     setAITexts(res.data);
     SetIsLoadingText(false);
