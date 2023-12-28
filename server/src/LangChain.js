@@ -5,8 +5,7 @@ const { TextLoader } = require("langchain/document_loaders/fs/text");
 const { CharacterTextSplitter } = require("langchain/text_splitter");
 const { OpenAIEmbeddings } = require("langchain/embeddings/openai");
 const { FaissStore } = require("langchain/vectorstores/faiss");
-const { OpenAI } = require("langchain/llms/openai");
-const { RetrievalQAChain, loadQAStuffChain } = require("langchain/chains");
+
 
 const path = require("path");
 
@@ -46,7 +45,7 @@ const Indexes = async (IndexFileName) => {
 
 
 module.exports = { Indexes };
-
+export {};
 // USESTORES
 // import { config } from "dotenv";
 // config();

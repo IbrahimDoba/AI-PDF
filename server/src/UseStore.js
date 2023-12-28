@@ -30,3 +30,4 @@ const QueryText = async (question) => {
   }
 };
 module.exports = { QueryText };
+export {};
