@@ -5,12 +5,12 @@ interface IPdf extends Document {
   title: string;
   fileName: string;
   aiQuestion: string;
-  aiAnswer: aiRes;
+  aiAnswer: string;
 }
-type aiRes = {
-  Q: string;
-  A: String;
-};
+// type aiRes = {
+//   Q: string;
+//   A: String;
+// };
 
 const pdfDetailsSchema = new mongoose.Schema(
   {

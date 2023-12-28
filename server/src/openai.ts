@@ -1,40 +1,54 @@
-const OpenAI = require("openai");
+import { Hercai, QuestionData, DrawImageData } from "hercai";
 
-// OPEN AI
-const apiKey = process.env.APIKEY
-const openai = new OpenAI({apiKey: apiKey});
 
-const RunPrompt = async (PdfText:String, question:String) => {
-
-  const prompt = `answer any question related to ${PdfText}. Return response in the following parable JSON format:
+const herc = new Hercai();
+let Answer:any
+let Answer2:any
+const Ai1 = async (PdfText: String, question: String) => {
+  let res = await herc
+    .question({
+      model: "v3-beta",
+      content: `answer this {${question}?} based on this {${PdfText}}.  Return response in A parseable JSON format:
   
     {
       "Q": "question",
       "A": "Answer"
     }
+  `,
+    })
+    .then((response:QuestionData) => {
+      const parsableJSONres = response.reply;
+      const parsedRes = JSON.parse(parsableJSONres);
+      Answer = parsedRes
 
-  `
-  const messages = [
-    {role: "user", content: prompt},
-    {role: "user", content: question},
-  ]
+      // console.log("PARSE AI2", parsedRes);
+      
+    });
+    let res2 = await herc
+    .question({
+      model: "v3-beta",
+      content: `answer this {What is the meaning for the word Adjectives? give a detailed explanation} . Return response in the following parable JSON format:
+  
+    {
+      "Q": "question",
+      "A": "Answer"
+    }
+  `,
+    })
+    .then((response:QuestionData) => {
+      const parsableJSONres = response.reply;
+      const parsedRes = JSON.parse(parsableJSONres);
+      Answer2 = parsedRes
 
-  const res = await openai.chat.completions.create({
-    messages: messages,
-    temperature: 1,
-    model: "gpt-3.5-turbo",
-  });
-  console.log("PARSE AI1")
+      // console.log("PARSE AI2", parsedRes);
+      
+    });
+    console.log("ANSWERS HEREE",{Answer,Answer2})
 
-
-  const parsableJSONres = res.choices[0].message.content
-  const parsedRes = JSON.parse(parsableJSONres)
-  console.log("PARSE AI2",parsedRes)
-
-  // console.log("AI ANASWER",parsedRes)
-  return parsedRes
+   return {Answer,Answer2}
+   
 };
 
+module.exports = { Ai1 };
+export {};
 
-module.exports = { RunPrompt }
-export {}

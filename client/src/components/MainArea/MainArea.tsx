@@ -9,7 +9,7 @@ import { AlertModel, LoadingSign } from "../utils";
 export default function MainArea() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState<any | null>(null);
-  const [userText, setUserText] = useState<String>("");
+  const [fileTitle, setFileTitle] = useState<String>("");
   const [aITexts, setAITexts] = useState<any>([]);
   const [aiQestion, setAiQuestion] = useState<string>("");
   const [isLoadingText, SetIsLoadingText] = useState<boolean>(false);
@@ -30,10 +30,14 @@ export default function MainArea() {
 
   const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files && event.target.files[0];
+   
     if (selectedFile) {
       setFile(selectedFile);
+      setFileTitle(selectedFile.name)
+      console.log(fileTitle)
     }
   };
+
   const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (file === null) {
@@ -49,7 +53,7 @@ export default function MainArea() {
     console.log(title, file);
 
     const res = await axios.post(
-      "https://ai-pdf-mm52.onrender.com/upload",
+      "http://localhost:5001/upload",
       { file: file, title: title },
       {
         headers: {
@@ -97,10 +101,12 @@ export default function MainArea() {
 
     console.log(aiQestion);
 
-    const res = await axios.post("https://ai-pdf-mm52.onrender.com/question", {
+    const res = await axios.post("http://localhost:5001/question", {
       question: aiQestion,
+      file:fileTitle,
     });
 
+    console.log(fileTitle);
     console.log(res);
 
     setAiQuestion("");
@@ -112,22 +118,26 @@ export default function MainArea() {
 
   const getAiChats = async () => {
     SetIsLoadingText(true);
-    const res = await axios.get("https://ai-pdf-mm52.onrender.com/getChats");
+    const res = await axios.get("http://localhost:5001/getChats");
     console.log(res);
-    if (res.data.length > 1) {
+    if (res.data.length > 0) {
       setTextIsPres(true);
+      setDeleteId(res.data[0].fileName);
+
     } else {
+      setTextIsPres(false);
     }
     // setUserText(res.data.aiAnswer.Q);
     setAITexts(res.data);
     SetIsLoadingText(false);
+    
   };
   const deleteChats = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     console.log("delet id heree", deleteId);
 
     const res = await axios.delete(
-      `https://ai-pdf-mm52.onrender.com/deleteChat/${deleteId}`,
+      `http://localhost:5001/deleteChat/${deleteId}`,
       {
         params: { name: deleteId },
       }
@@ -217,7 +227,7 @@ export default function MainArea() {
                     onInit={(typewriter) => {
                       typewriter
                         .changeDelay(30)
-                        .typeString(aiText.aiAnswer.Q)
+                        .typeString(aiText.aiQuestion)
                         .start();
                     }}
                   />
@@ -231,7 +241,7 @@ export default function MainArea() {
                       typewriter
                         .changeDelay(30)
                         .pauseFor(3500)
-                        .typeString(aiText.aiAnswer.A)
+                        .typeString(aiText.aiAnswer)
                         .start();
                     }}
                   />

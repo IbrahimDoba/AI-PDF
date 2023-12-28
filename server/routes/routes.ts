@@ -7,10 +7,14 @@ const router = Router();
 const multer = require("multer");
 const path = require("path");
 const officeParser = require("officeparser");
-const { RunPrompt } = require("../src/openai");
+const { Ai1 } = require("../src/openai");
+const { saveMessage } = require("../src/saveFile");
+const { Indexes } = require("../src/LangChain");
+const { QueryText } = require("../src/UseStore");
 
 let globalPdfText: any;
 let pdfFileName: any;
+// let destinationPath:any = "./uploads"
 // MUTLER
 const storage = multer.diskStorage({
   destination: function (req: any, file: any, cb: any) {
@@ -53,11 +57,11 @@ router.post(
       res.send("no file")
     }
     pdfFileName = fileName;
-    console.log("TEST DATA", title, fileName);
+    console.log("TEST DATA", title, pdfFileName);
 
     const uploadedDocPath = path.join("./files", fileName);
     console.log("filepath",uploadedDocPath)
-
+    const IndexFileName = fileName + ".txt"
     // console.log(fileName)
     try {
       officeParser.parseOffice(
@@ -68,10 +72,11 @@ router.post(
            console.log(err)
             return;
           }
-          console.log(data);
+          // console.log(data);
           res.send("sucess")
           globalPdfText = data;
-
+          saveMessage(globalPdfText,fileName)
+          Indexes(IndexFileName)
           // console.log(paresedRes);
           //  res.json({ message: paresedRes });
         }
@@ -84,21 +89,30 @@ router.post(
   }
 );
 router.post("/question", async (req: any, res: any) => {
+  // QueryText()
+
   const question = req.body.question;
+  const fileName = req.body.file;
+  console.log("FIleName",fileName);
+  
   try {
-    if (!question) {
-      return res.status(400).json({ error: "question is required" });
-    }
-    if (!globalPdfText) {
-      return res.status(400).json({ error: "PDF/DOC is required" });
-    }
+    // if (!question) {
+    //   return res.status(400).json({ error: "question is required" });
+    // }
+    // if (!globalPdfText) {
+    //   return res.status(400).json({ error: "PDF/DOC is required" });
+    // }
 
     console.log(question);
-    const parsedRes = await RunPrompt(globalPdfText, question);
+    const aiAns = await QueryText(question) 
+    
+    res.json(aiAns)
+    console.log("AiText",aiAns)
+    const newPdf = new Pdf({ aiAnswer: aiAns, fileName: fileName, aiQuestion: question });
 
-    const newPdf = new Pdf({ aiAnswer: parsedRes, fileName: pdfFileName });
     console.log(newPdf);
     await newPdf.save();
+   
     res.json("parsedRes");
   } catch (err) {}
 });

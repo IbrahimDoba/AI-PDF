@@ -1,3 +1,5 @@
+// package.json   "module": "commonjs", before langchain
+
 const express = require("express");
 require('dotenv').config()
 const mongoose = require("mongoose");
