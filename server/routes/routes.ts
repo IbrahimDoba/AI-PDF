@@ -106,7 +106,7 @@ router.post("/question", async (req: any, res: any) => {
     console.log(question);
     const aiAns = await QueryText(question) 
     
-    res.json(aiAns)
+    res.json(" Sucess Answer")
     console.log("AiText",aiAns)
     const newPdf = new Pdf({ aiAnswer: aiAns, fileName: fileName, aiQuestion: question });
 
@@ -119,7 +119,7 @@ router.post("/question", async (req: any, res: any) => {
 // get the info
 
 router.get("/getChats", async (req: any, res: any) => {
-  const fileName = pdfFileName;
+  const fileName = req.query.fileTitleName;
   const aiChats = await Pdf.find({ fileName: fileName });
   console.log("AI CHATS HERE",aiChats)
   res.json(aiChats)

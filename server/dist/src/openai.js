@@ -9,33 +9,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const OpenAI = require("openai");
-// OPEN AI
-const apiKey = process.env.APIKEY;
-const openai = new OpenAI({ apiKey: apiKey });
-const RunPrompt = (PdfText, question) => __awaiter(void 0, void 0, void 0, function* () {
-    const prompt = `answer any question related to ${PdfText}. Return response in the following parable JSON format:
+const hercai_1 = require("hercai");
+const herc = new hercai_1.Hercai();
+let Answer;
+let Answer2;
+const Ai1 = (PdfText, question) => __awaiter(void 0, void 0, void 0, function* () {
+    let res = yield herc
+        .question({
+        model: "v3-beta",
+        content: `answer this {${question}?} based on this {${PdfText}}.  Return response in A parseable JSON format:
   
     {
       "Q": "question",
       "A": "Answer"
     }
-
-  `;
-    const messages = [
-        { role: "user", content: prompt },
-        { role: "user", content: question },
-    ];
-    const res = yield openai.chat.completions.create({
-        messages: messages,
-        temperature: 1,
-        model: "gpt-3.5-turbo",
+  `,
+    })
+        .then((response) => {
+        const parsableJSONres = response.reply;
+        const parsedRes = JSON.parse(parsableJSONres);
+        Answer = parsedRes;
+        // console.log("PARSE AI2", parsedRes);
     });
-    console.log("PARSE AI1");
-    const parsableJSONres = res.choices[0].message.content;
-    const parsedRes = JSON.parse(parsableJSONres);
-    console.log("PARSE AI2", parsedRes);
-    // console.log("AI ANASWER",parsedRes)
-    return parsedRes;
+    let res2 = yield herc
+        .question({
+        model: "v3-beta",
+        content: `answer this {What is the meaning for the word Adjectives? give a detailed explanation} . Return response in the following parable JSON format:
+  
+    {
+      "Q": "question",
+      "A": "Answer"
+    }
+  `,
+    })
+        .then((response) => {
+        const parsableJSONres = response.reply;
+        const parsedRes = JSON.parse(parsableJSONres);
+        Answer2 = parsedRes;
+        // console.log("PARSE AI2", parsedRes);
+    });
+    console.log("ANSWERS HEREE", { Answer, Answer2 });
+    return { Answer, Answer2 };
 });
-module.exports = { RunPrompt };
+module.exports = { Ai1 };

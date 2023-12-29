@@ -1,4 +1,7 @@
-const apiKey = "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";
+import { config } from "dotenv";
+config();
+
+const apiKey = process.env.APIKEY
 
 // INDEXES
 const { TextLoader } = require("langchain/document_loaders/fs/text");
@@ -9,18 +12,18 @@ const { FaissStore } = require("langchain/vectorstores/faiss");
 
 const path = require("path");
 
-const Indexes = async (IndexFileName) => {
+const Indexes = async (IndexFileName:any) => {
   const directoryPath = path.join(__dirname, '..');
   const fullPath = path.join(directoryPath, IndexFileName);
 
   // Check if the file exists
-  try {
-    await fs.access(fullPath);
-    console.log("Index file already exists. Skipping the indexing process.");
-    return;
-  } catch (error) {
-    // File doesn't exist, continue with the indexing process
-  }
+  // try {
+  //   await fs.access(fullPath);
+  //   console.log("Index file already exists. Skipping the indexing process.");
+  //   return;
+  // } catch (error) {
+  //   // File doesn't exist, continue with the indexing process
+  // }
 
   const loader = new TextLoader(fullPath);
   const docs = await loader.load();
@@ -45,10 +48,7 @@ const Indexes = async (IndexFileName) => {
 
 
 module.exports = { Indexes };
-export {};
-// USESTORES
-// import { config } from "dotenv";
-// config();
+
 
 
 

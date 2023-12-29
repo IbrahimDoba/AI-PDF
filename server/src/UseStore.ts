@@ -1,13 +1,16 @@
-const { OpenAIEmbeddings } = require("langchain/embeddings/openai");
-const { FaissStore } = require("langchain/vectorstores/faiss");
-const { OpenAI } = require("langchain/llms/openai");
-const { RetrievalQAChain, loadQAStuffChain } = require("langchain/chains");
-const apiKey = "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";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { FaissStore } from "langchain/vectorstores/faiss";
+import { OpenAI } from "langchain/llms/openai";
+import { RetrievalQAChain, loadQAStuffChain } from "langchain/chains";
+import { config } from "dotenv";
+config();
 
-const QueryText = async (question) => {
+const apiKey = process.env.APIKEY;
+
+const QueryText = async (question:any) => {
   const embeddings = new OpenAIEmbeddings({
     openAIApiKey: apiKey,
-    temperature: 0,
+    // temperature: 0,
   });
   const vectorStore = await FaissStore.load("./", embeddings);
 
@@ -30,4 +33,3 @@ const QueryText = async (question) => {
   }
 };
 module.exports = { QueryText };
-export {};

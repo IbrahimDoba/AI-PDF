@@ -2,6 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // const mongoose = require("mongoose");
 const mongoose = require("mongoose");
+// type aiRes = {
+//   Q: string;
+//   A: String;
+// };
 const pdfDetailsSchema = new mongoose.Schema({
     title: {
         type: String,
