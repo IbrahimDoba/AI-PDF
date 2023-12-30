@@ -119,8 +119,9 @@ router.post("/question", async (req: any, res: any) => {
 // get the info
 
 router.get("/getChats", async (req: any, res: any) => {
-  const fileName = req.query.fileTitleName;
-  const aiChats = await Pdf.find({ fileName: fileName });
+  // const {fileTitleName} = pdfFileName;
+
+  const aiChats = await Pdf.find({ fileName: pdfFileName });
   console.log("AI CHATS HERE",aiChats)
   res.json(aiChats)
 });

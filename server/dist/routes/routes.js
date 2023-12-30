@@ -19,9 +19,9 @@ const multer = require("multer");
 const path = require("path");
 const officeParser = require("officeparser");
 const { Ai1 } = require("../src/openai");
-const { saveMessage } = require("../src/saveFile.js");
-const { Indexes } = require("../src/LangChain.js");
-const { QueryText } = require("../src/UseStore.js");
+const { saveMessage } = require("../src/saveFile");
+const { Indexes } = require("../src/LangChain");
+const { QueryText } = require("../src/UseStore");
 let globalPdfText;
 let pdfFileName;
 // let destinationPath:any = "./uploads"
@@ -96,7 +96,7 @@ router.post("/question", (req, res) => __awaiter(void 0, void 0, void 0, functio
         // }
         console.log(question);
         const aiAns = yield QueryText(question);
-        res.json(aiAns);
+        res.json(" Sucess Answer");
         console.log("AiText", aiAns);
         const newPdf = new Pdf({ aiAnswer: aiAns, fileName: fileName, aiQuestion: question });
         console.log(newPdf);
@@ -107,7 +107,7 @@ router.post("/question", (req, res) => __awaiter(void 0, void 0, void 0, functio
 }));
 // get the info
 router.get("/getChats", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const fileName = pdfFileName;
+    const fileName = req.query.fileTitleName;
     const aiChats = yield Pdf.find({ fileName: fileName });
     console.log("AI CHATS HERE", aiChats);
     res.json(aiChats);

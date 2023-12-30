@@ -30,11 +30,11 @@ export default function MainArea() {
 
   const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files && event.target.files[0];
-   
+
     if (selectedFile) {
       setFile(selectedFile);
-      setFileTitle(selectedFile.name)
-      console.log(fileTitle)
+      setFileTitle(selectedFile.name);
+      console.log(fileTitle);
     }
   };
 
@@ -53,7 +53,7 @@ export default function MainArea() {
     console.log(title, file);
 
     const res = await axios.post(
-      "http://localhost:5001/upload",
+      "https://ai-pdf-mm52.onrender.com/upload",
       { file: file, title: title },
       {
         headers: {
@@ -75,15 +75,15 @@ export default function MainArea() {
     console.log(res);
     getAiChats();
   };
-  const handlePreview = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    if (file === null) {
-      setShowModel(true);
-      setModalMessage("Please Upload a file before you can Preview it");
-      return;
-    }
-    window.open(`http://localhost:5001/files/${file}`, "_blank", "noreferrer");
-  };
+  // const handlePreview = (e: React.MouseEvent<HTMLElement>) => {
+  //   e.preventDefault();
+  //   if (file === null) {
+  //     setShowModel(true);
+  //     setModalMessage("Please Upload a file before you can Preview it");
+  //     return;
+  //   }
+  //   window.open(`http://localhost:5001/files/${file}`, "_blank", "noreferrer");
+  // };
   const submitQuestion = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     SetIsLoadingText(true);
@@ -101,43 +101,44 @@ export default function MainArea() {
 
     console.log(aiQestion);
 
-    const res = await axios.post("http://localhost:5001/question", {
+    const res = await axios.post("https://ai-pdf-mm52.onrender.com/question", {
       question: aiQestion,
-      file:fileTitle,
+      file: fileTitle,
     });
 
     console.log(fileTitle);
     console.log(res);
 
     setAiQuestion("");
-    getAiChats();
+
     SetIsLoadingText(false);
     setDeleteId(res.data[0].fileName);
     setTextIsPres(true);
+    await getAiChats();
   };
 
   const getAiChats = async () => {
     SetIsLoadingText(true);
-    const res = await axios.get("http://localhost:5001/getChats");
+    const res = await axios.get("https://ai-pdf-mm52.onrender.com/getChats", {
+      params: { fileTitleName: fileTitle },
+    });
     console.log(res);
     if (res.data.length > 0) {
       setTextIsPres(true);
       setDeleteId(res.data[0].fileName);
-
     } else {
       setTextIsPres(false);
     }
     // setUserText(res.data.aiAnswer.Q);
     setAITexts(res.data);
     SetIsLoadingText(false);
-    
   };
   const deleteChats = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     console.log("delet id heree", deleteId);
 
     const res = await axios.delete(
-      `http://localhost:5001/deleteChat/${deleteId}`,
+      `https://ai-pdf-mm52.onrender.com/deleteChat/${deleteId}`,
       {
         params: { name: deleteId },
       }

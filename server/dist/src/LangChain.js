@@ -9,7 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const apiKey = "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";
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
+const apiKey = process.env.APIKEY;
 // INDEXES
 const { TextLoader } = require("langchain/document_loaders/fs/text");
 const { CharacterTextSplitter } = require("langchain/text_splitter");
@@ -20,14 +22,13 @@ const Indexes = (IndexFileName) => __awaiter(void 0, void 0, void 0, function* (
     const directoryPath = path.join(__dirname, '..');
     const fullPath = path.join(directoryPath, IndexFileName);
     // Check if the file exists
-    try {
-        yield fs.access(fullPath);
-        console.log("Index file already exists. Skipping the indexing process.");
-        return;
-    }
-    catch (error) {
-        // File doesn't exist, continue with the indexing process
-    }
+    // try {
+    //   await fs.access(fullPath);
+    //   console.log("Index file already exists. Skipping the indexing process.");
+    //   return;
+    // } catch (error) {
+    //   // File doesn't exist, continue with the indexing process
+    // }
     const loader = new TextLoader(fullPath);
     const docs = yield loader.load();
     const splitter = new CharacterTextSplitter({
@@ -44,6 +45,3 @@ const Indexes = (IndexFileName) => __awaiter(void 0, void 0, void 0, function* (
     yield vectorstore.save("./");
 });
 module.exports = { Indexes };
-// USESTORES
-// import { config } from "dotenv";
-// config();
