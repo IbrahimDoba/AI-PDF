@@ -53,7 +53,7 @@ export default function MainArea() {
     console.log(title, file);
 
     const res = await axios.post(
-      "https://ai-pdf-mm52.onrender.com /upload",
+      "https://ai-pdf-mm52.onrender.com/upload",
       { file: file, title: title },
       {
         headers: {
