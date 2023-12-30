@@ -1,10 +1,10 @@
 // package.json   "module": "commonjs", before langchain
 
 const express = require("express");
-require('dotenv').config()
+require("dotenv").config();
 const mongoose = require("mongoose");
 const MyRoutes = require("../routes/routes");
-const cors = require("cors")
+const cors = require("cors");
 //For env File
 
 const URI =
@@ -13,11 +13,10 @@ const URI =
 mongoose.connect(URI, {}).then(() => console.log("Mongo Connceted"));
 
 const app = express();
-app.use(express.json())
-app.use(cors())
-// { origin : "https://ai-pdf-eight.vercel.app" }
-app.use("/", MyRoutes);
+app.use(express.json());
+app.use(cors({ origin: "https://ai-pdf-eight.vercel.app" }));
 
+app.use("/", MyRoutes);
 
 const port = process.env.PORT || 5001;
 app.listen(port, () => {
