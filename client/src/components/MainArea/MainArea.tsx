@@ -124,7 +124,9 @@ export default function MainArea() {
   const getAiChats = async () => {
     SetIsLoadingText(true);
     const res = await axios.get("https://ai-pdf-mm52.onrender.com/getChats", {
-      params: { fileTitleName: fileTitle },
+      headers: {
+        "Access-Control-Allow-Origin": "https://ai-pdf-eight.vercel.app",
+      },
     }, );
     console.log(res);
     if (res.data.length > 0) {
