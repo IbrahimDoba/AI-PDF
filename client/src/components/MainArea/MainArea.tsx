@@ -53,7 +53,7 @@ export default function MainArea() {
     console.log(title, file);
 
     const res = await axios.post(
-      "https://ai-pdf-mm52.onrender.com/upload",
+      "https://ai-pdf-mm52.onrender.com /upload",
       { file: file, title: title },
       {
         headers: {
@@ -104,6 +104,10 @@ export default function MainArea() {
     const res = await axios.post("https://ai-pdf-mm52.onrender.com/question", {
       question: aiQestion,
       file: fileTitle,
+    },{
+      headers: {
+        "Access-Control-Allow-Origin": "https://ai-pdf-eight.vercel.app",
+      },
     });
 
     console.log(fileTitle);
@@ -121,7 +125,7 @@ export default function MainArea() {
     SetIsLoadingText(true);
     const res = await axios.get("https://ai-pdf-mm52.onrender.com/getChats", {
       params: { fileTitleName: fileTitle },
-    });
+    }, );
     console.log(res);
     if (res.data.length > 0) {
       setTextIsPres(true);
@@ -141,7 +145,7 @@ export default function MainArea() {
       `https://ai-pdf-mm52.onrender.com/deleteChat/${deleteId}`,
       {
         params: { name: deleteId },
-      }
+      },
     );
     console.log(res);
     getAiChats();
