@@ -59,7 +59,7 @@ export default function MainArea() {
         headers: {
           "Content-Type": "multipart/form-data",
           Accept: "multipart/form-data",
-          "Access-Control-Allow-Origin": "https://ai-pdf-eight.vercel.app",
+          // "Access-Control-Allow-Origin": "https://ai-pdf-eight.vercel.app",
         },
       }
     );
@@ -104,11 +104,7 @@ export default function MainArea() {
     const res = await axios.post("https://ai-pdf-mm52.onrender.com/question", {
       question: aiQestion,
       file: fileTitle,
-    },{
-      headers: {
-        "Access-Control-Allow-Origin": "https://ai-pdf-eight.vercel.app",
-      },
-    });
+    },);
 
     console.log(fileTitle);
     console.log(res);
@@ -123,11 +119,7 @@ export default function MainArea() {
 
   const getAiChats = async () => {
     SetIsLoadingText(true);
-    const res = await axios.get("https://ai-pdf-mm52.onrender.com/getChats", {
-      headers: {
-        "Access-Control-Allow-Origin": "https://ai-pdf-eight.vercel.app",
-      },
-    }, );
+    const res = await axios.get("https://ai-pdf-mm52.onrender.com/getChats",);
     console.log(res);
     if (res.data.length > 0) {
       setTextIsPres(true);
