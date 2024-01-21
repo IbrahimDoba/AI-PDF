@@ -1,4 +1,5 @@
 {
+  "proxy": "https://ai-pdf-mm52.onrender.com",
   "name": "nextapp",
   "version": "0.1.0",
   "private": true,

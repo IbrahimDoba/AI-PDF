@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 config();
 
-const apiKey = process.env.APIKEY
+const apiKey = process.env.APIKEY;
 
 // INDEXES
 const { TextLoader } = require("langchain/document_loaders/fs/text");
@@ -9,11 +9,10 @@ const { CharacterTextSplitter } = require("langchain/text_splitter");
 const { OpenAIEmbeddings } = require("langchain/embeddings/openai");
 const { FaissStore } = require("langchain/vectorstores/faiss");
 
-
 const path = require("path");
 
-const Indexes = async (IndexFileName:any) => {
-  const directoryPath = path.join(__dirname, '..');
+const Indexes = async (IndexFileName: any) => {
+  const directoryPath = path.join(__dirname, "..");
   const fullPath = path.join(directoryPath, IndexFileName);
 
   // Check if the file exists
@@ -43,15 +42,6 @@ const Indexes = async (IndexFileName:any) => {
 
   const vectorstore = await FaissStore.fromDocuments(documents, embeddings);
   await vectorstore.save("./");
-
 };
 
-
 module.exports = { Indexes };
-
-
-
-
-
-
-

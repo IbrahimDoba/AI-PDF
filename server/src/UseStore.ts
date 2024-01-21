@@ -7,7 +7,7 @@ config();
 
 const apiKey = process.env.APIKEY;
 
-const QueryText = async (question:any) => {
+const QueryText = async (question: any) => {
   const embeddings = new OpenAIEmbeddings({
     openAIApiKey: apiKey,
     // temperature: 0,
@@ -27,7 +27,7 @@ const QueryText = async (question:any) => {
     });
     console.log("TEXT HERE12");
     // console.log("RES DATA HERE",res.text);
-    return res.text
+    return res.text;
   } catch (err) {
     console.log(err);
   }
