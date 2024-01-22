@@ -2,6 +2,7 @@
 import React from "react";
 import AiPdfForm from "@/components/MainArea/AiPdfForm";
 import AiPdfDetails from "@/components/MainArea/AiPdfDetails";
+import { useAiPdfContext } from "@/hooks/AiPdfContext";
 
 export interface QuestionProps {
   aiQuestion: string;
@@ -10,7 +11,7 @@ export interface QuestionProps {
   index: number;
 }
 const HomePage = () => {
-  // const { questions, dispatch, fileTitle } = useAiPdfContext();
+  const { questions, dispatch, fileTitle } = useAiPdfContext();
 
   // useEffect(() => {
   //   const fetchQuestions = async () => {
