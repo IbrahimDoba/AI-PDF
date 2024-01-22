@@ -4,16 +4,13 @@ import { AiFillDelete } from "react-icons/ai";
 import { LoadingSign } from "../utils";
 import axios from "axios";
 import { useAiPdfContext } from "@/hooks/AiPdfContext";
-import fetchQuestions from "./AiPdfDetails"
 const AiPdfForm = () => {
   const [deleteId, setDeleteId] = useState<any>([]);
 
   const {
-    showModel,
     setShowModel,
     setIsLoading,
     isLoading,
-    modalMessage,
     setModalMessage,
     file,
     setFile,
@@ -44,9 +41,7 @@ const AiPdfForm = () => {
       return;
     }
     setIsLoading(true);
-    // const formData = new FormData();
-    // formData.append("title", title);
-    // formData.append("file", file);
+
     console.log("TItle4", fileTitle);
     console.log("title", file);
 

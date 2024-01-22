@@ -3,20 +3,15 @@ import Typewriter from "typewriter-effect";
 import { AlertModel, LoadingSign } from "../utils";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import AiPdfForm from "@/components/MainArea/AiPdfForm";
 import { useAiPdfContext } from "@/hooks/AiPdfContext";
 import { QuestionProps } from "@/pages/HomePage";
 
 const AiPdfDetails = () => {
-  const [aITexts, setAITexts] = useState<any[]>([]);
   const [aiQestion, setAiQuestion] = useState<string>("");
   const [isLoadingText, SetIsLoadingText] = useState<boolean>(false);
-  const [deleteId, setDeleteId] = useState<any>([]);
-  const [textIsPres, setTextIsPres] = useState<boolean>(false);
-  const [refreshFlag, setRefreshFlag] = useState(false);
+ 
   const {
     file,
-    setFile,
     setModalMessage,
     setShowModel,
     questions,
@@ -36,7 +31,7 @@ const AiPdfDetails = () => {
     if (res) {
       dispatch({ type: "GET_QUESTIONS", payload: response });
 
-      setRefreshFlag((prev) => !prev);
+     
       console.log(res)
 
     }
@@ -45,7 +40,7 @@ const AiPdfDetails = () => {
   useEffect(() => {
    
     fetchQuestions();
-  }, [fileTitle]);
+  }, [fileTitle,]);
 
   const handleQuestion = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();

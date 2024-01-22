@@ -64,26 +64,14 @@ export const AiPdfProvider: React.FC<AiPdfProviderProps> = ({ children }) => {
   });
 
   const contextValue: AiPdfContextType = {
-    // title,
-    // setTitle,
     file,
     setFile,
     fileTitle,
     setFileTitle,
-    // fileTitle,
-    // setFileTitle,
-    // aITexts,
-    // setAITexts,
-    // aiQestion,
-    // setAiQuestion,
-    // isLoadingText,
-    // SetIsLoadingText,
-    // textIsPres,
-    // setTextIsPres,
+
     isLoading,
     setIsLoading,
-    // deleteId,
-    // setDeleteId,
+
     showModel,
     setShowModel,
     modalMessage,
