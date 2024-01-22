@@ -1,9 +1,7 @@
 "use client";
-import React, { useEffect } from "react";
-import { useAiPdfContext } from "@/hooks/AiPdfContext";
+import React from "react";
 import AiPdfForm from "@/components/MainArea/AiPdfForm";
 import AiPdfDetails from "@/components/MainArea/AiPdfDetails";
-import axios from "axios";
 
 export interface QuestionProps {
   aiQuestion: string;

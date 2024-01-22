@@ -47,15 +47,15 @@ export const aiPdfReducer = (state: any, action: any) => {
 };
 
 export const AiPdfProvider: React.FC<AiPdfProviderProps> = ({ children }) => {
-  const [title, setTitle] = useState("");
+  // const [title, setTitle] = useState("");
   const [file, setFile] = useState<any | null>(null);
   const [fileTitle, setFileTitle] = useState<string>("");
-  const [aITexts, setAITexts] = useState<any[]>([]);
-  const [aiQestion, setAiQuestion] = useState<string>("");
-  const [isLoadingText, SetIsLoadingText] = useState<boolean>(false);
-  const [textIsPres, setTextIsPres] = useState<boolean>(false);
+  // const [aITexts, setAITexts] = useState<any[]>([]);
+  // const [aiQestion, setAiQuestion] = useState<string>("");
+  // const [isLoadingText, SetIsLoadingText] = useState<boolean>(false);
+  // const [textIsPres, setTextIsPres] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [deleteId, setDeleteId] = useState<any>([]);
+  // const [deleteId, setDeleteId] = useState<any>([]);
   const [showModel, setShowModel] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>("");
 
