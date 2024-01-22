@@ -1,5 +1,6 @@
 // AiPdfContext.tsx
 "use client";
+import { AiPdfContext } from "@/context/AiPdfProvider";
 import {
   createContext,
   useContext,
@@ -22,13 +23,12 @@ export interface AiPdfContextType {
   modalMessage: string;
   setModalMessage: Dispatch<SetStateAction<string>>;
   state: any;
-  dispatch: any;
+  dispatch: Dispatch<any>;
   questions: QuestionProps[];
   fileTitle: string;
   setFileTitle: Dispatch<SetStateAction<string>>;
 }
 
-const AiPdfContext = createContext<AiPdfContextType | undefined>(undefined);
 
 export const useAiPdfContext:any = () => {
   const context = useContext(AiPdfContext);
@@ -38,4 +38,4 @@ export const useAiPdfContext:any = () => {
   return context;
 };
 
-export default AiPdfContext;
+

@@ -1,11 +1,12 @@
 // AiPdfProvider.tsx
 "use client";
-import React, { useState, ReactNode, useReducer } from "react";
-import AiPdfContext, { AiPdfContextType } from "../hooks/AiPdfContext";
+import React, { useState, ReactNode, useReducer, createContext } from "react";
+import  { AiPdfContextType } from "../hooks/AiPdfContext";
 
 interface AiPdfProviderProps {
   children: ReactNode;
 }
+export const AiPdfContext = createContext<AiPdfContextType | undefined>(undefined);
 
 // export const aiPdfReducer = (state, action) => {
 //   switch (action.type) {

@@ -13,6 +13,9 @@ export interface QuestionProps {
 const HomePage = () => {
   const { questions, dispatch, fileTitle } = useAiPdfContext();
 
+  const test = () => {
+    console.log(questions)
+  } 
   // useEffect(() => {
   //   const fetchQuestions = async () => {
   //     const res = await axios.get("http://localhost:5001/api/ai/", {

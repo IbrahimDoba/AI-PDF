@@ -17,12 +17,13 @@ const loggingMiddleware = (req: Request, res: Response, next: NextFunction) => {
 };
 
 // middleware
+app.use(cors());
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(loggingMiddleware);
 
 // { origin : "https://ai-pdf-eight.vercel.app" }
-app.use(cors());
 // routes
 app.use("/api/ai", AiRoutes);
 app.use("/api/user", AuthRoutes);
