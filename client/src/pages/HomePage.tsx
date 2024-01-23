@@ -13,25 +13,7 @@ export interface QuestionProps {
 const HomePage = () => {
   const { questions, dispatch, fileTitle } = useAiPdfContext();
 
-  const test = () => {
-    console.log(questions)
-  } 
-  // useEffect(() => {
-  //   const fetchQuestions = async () => {
-  //     const res = await axios.get("http://localhost:5001/api/ai/", {
-  //       params: { fileNameTitle: fileTitle },
-  //     });
-  //     const response = await res.data;
-  //     if(!res){
-  //       return
-  //     }
-  //     if (res) {
-  //       dispatch({ type: "GET_QUESTIONS", payload: response });
-  //     }
-  //   };
-  //   fetchQuestions();
-  //   console.log(questions)
-  // }, [dispatch, fileTitle]);
+
 
   return (
     <div className="flex justify-start items-start h-[93.4vh] w-full bg-gray-400 max-lg:flex-col">

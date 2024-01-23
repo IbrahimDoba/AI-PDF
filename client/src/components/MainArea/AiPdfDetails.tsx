@@ -9,7 +9,7 @@ import { QuestionProps } from "@/pages/HomePage";
 const AiPdfDetails = () => {
   const [aiQestion, setAiQuestion] = useState<string>("");
   const [isLoadingText, SetIsLoadingText] = useState<boolean>(false);
- 
+
   const {
     file,
     setModalMessage,
@@ -19,8 +19,7 @@ const AiPdfDetails = () => {
     fileTitle,
   } = useAiPdfContext();
 
-   const fetchQuestions = async () => {
-    
+  const fetchQuestions = async () => {
     const res = await axios.get("https://ai-pdf-mm52.onrender.com/api/ai/", {
       params: { fileNameTitle: fileTitle },
     });
@@ -31,16 +30,13 @@ const AiPdfDetails = () => {
     if (res) {
       dispatch({ type: "GET_QUESTIONS", payload: response });
 
-     
-      console.log(res)
-
+      console.log(res);
     }
   };
 
   useEffect(() => {
-   
     fetchQuestions();
-  }, [fileTitle,]);
+  }, [fileTitle]);
 
   const handleQuestion = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -59,10 +55,19 @@ const AiPdfDetails = () => {
 
     console.log(questions);
 
-    const res = await axios.post("https://ai-pdf-mm52.onrender.com/api/ai/question", {
-      question: aiQestion,
-      file: fileTitle,
-    });
+    const res = await axios.post(
+      "https://ai-pdf-mm52.onrender.com/api/ai/question",
+      {
+        question: aiQestion,
+        file: fileTitle,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
     const response = res.data;
     if (!res) {
       setShowModel(true);
@@ -71,31 +76,29 @@ const AiPdfDetails = () => {
     if (res) {
       setAiQuestion("");
       SetIsLoadingText(false);
-   
+
       console.log("response", response);
-      
+
       dispatch({ type: "CREATE_QUESTION", payload: response });
-      fetchQuestions()
+      fetchQuestions();
     }
   };
 
   return (
-    
-    <div className="flex-1 flex flex-col text-white justify-between items-center p-10 border  h-full bg-gray-700 overflow-auto max-lg:w-full max-md:p-2"
+    <div
+      className="flex-1 flex flex-col text-white justify-between items-center p-10 border  h-full bg-gray-700 overflow-auto max-lg:w-full max-md:p-2"
       key={questions}
     >
-     
-        <Typewriter
-          onInit={(typewriter) => {
-            typewriter
-              .typeString(
-                "Upload a Document or Pdf and ask any question related to it!"
-              )
-              .deleteAll()
-              .start();
-          }}
-        />
-    
+      <Typewriter
+        onInit={(typewriter) => {
+          typewriter
+            .typeString(
+              "Upload a Document or Pdf and ask any question related to it!"
+            )
+            .deleteAll()
+            .start();
+        }}
+      />
 
       {/* {showModel && (
       <AlertModel message={modalMessage} onClose={closeModel} />
@@ -104,10 +107,10 @@ const AiPdfDetails = () => {
       {isLoadingText ? (
         <LoadingSign />
       ) : (
-        questions && questions.map((question: QuestionProps) => (
+        questions &&
+        questions.map((question: QuestionProps) => (
           <div
             key={question.index}
-            
             className="flex flex-col w-[80%]  justify-center text-gray-200 mb-8 "
           >
             <div className="flex mb-3 justify-end items-end ">
@@ -162,4 +165,4 @@ const AiPdfDetails = () => {
   );
 };
 
-export default AiPdfDetails ;
+export default AiPdfDetails;
