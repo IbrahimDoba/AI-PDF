@@ -4,8 +4,12 @@ import { AlertModel, LoadingSign } from "../utils";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAiPdfContext } from "@/hooks/AiPdfContext";
-import { QuestionProps } from "@/pages/HomePage";
-
+export interface QuestionProps {
+  aiQuestion: string;
+  aiAnswer: string;
+  _id: string;
+  index: number;
+}
 const AiPdfDetails = () => {
   const [aiQestion, setAiQuestion] = useState<string>("");
   const [isLoadingText, SetIsLoadingText] = useState<boolean>(false);

@@ -1,7 +1,6 @@
 import { AiPdfProvider } from "@/context/AiPdfProvider";
 // import MainArea from "@/components/MainArea/MainArea";
 import Navbar from "@/components/Nav/Navbar";
-import HomePage from "@/pages/HomePage";
 import AiPdfForm from "@/components/MainArea/AiPdfForm";
 import AiPdfDetails from "@/components/MainArea/AiPdfDetails";
 
