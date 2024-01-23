@@ -1,6 +1,6 @@
 // AiPdfContext.tsx
 "use client";
-import { AiPdfContext } from "@/context/AiPdfProvider";
+import { AiPdfContext } from "../context/AiPdfProvider";
 import {
   createContext,
   useContext,
@@ -33,7 +33,7 @@ export interface AiPdfContextType {
 export const useAiPdfContext:any = () => {
   const context = useContext(AiPdfContext);
   if (!context) {
-    throw new Error("useAiPdfContext must be used within AiPdfProvider");
+    throw new Error("useAiPdfContext must be used INSIDE AiPdfProvider");
   }
   return context;
 };
